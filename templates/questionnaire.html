@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+{% block title %}Cuestionario de Edad Biológica{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Print styles */
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <h1 class="mb-0">Cuestionario de Edad Biológica</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cuestionario</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Questionnaire Form -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h3 class="m-0 font-weight-bold">Completa la Evaluación</h3>
+                        <p class="mb-0 text-muted">Responde todas las preguntas para calcular tu edad biológica</p>
+                    </div>
+                    <div class="card-body">
+                        <!-- Progress Bar -->
+                        <div class="progress-container">
+                            <p class="text-muted">Progreso del Cuestionario</p>
+                            <div class="progress">
+                                <div id="questionnaire-progress" class="progress-bar" role="progressbar" 
+                                     style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Questionnaire Form -->
+                        <form id="questionnaire-form" action="{{ url_for('calculate') }}" method="post">
+                            <!-- Personal Info Section -->
+                            <div class="questionnaire-section">
+                                <h3>
+                                    <i class="fas fa-user me-2"></i>
+                                    {{ categories['personal'] }}
+                                </h3>
+                                
+                                {% for question in categorized_questions['personal']['questions'] %}
+                                <div class="question-card" data-question-id="{{ question.id }}" data-input-type="{{ question.type }}">
+                                    <div class="question-text">{{ question.text }}</div>
+                                    
+                                    {% if question.type == 'number' %}
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" name="{{ question.id }}" 
+                                            min="{{ question.min }}" max="{{ question.max }}" 
+                                            placeholder="Ingresa un valor entre {{ question.min }} y {{ question.max }}">
+                                    </div>
+                                    {% elif question.type == 'choice' %}
+                                    <div class="mb-3">
+                                        {% for option in question.options %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="{{ question.id }}" 
+                                                id="{{ question.id }}_{{ option.value }}" value="{{ option.value }}">
+                                            <label class="form-check-label" for="{{ question.id }}_{{ option.value }}">
+                                                {{ option.text }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Physical Activity Section -->
+                            <div class="questionnaire-section">
+                                <h3>
+                                    <i class="fas fa-running me-2"></i>
+                                    {{ categories['physical'] }}
+                                </h3>
+                                
+                                {% for question in categorized_questions['physical']['questions'] %}
+                                <div class="question-card" data-question-id="{{ question.id }}" data-input-type="{{ question.type }}">
+                                    <div class="question-text">{{ question.text }}</div>
+                                    
+                                    {% if question.type == 'number' %}
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" name="{{ question.id }}" 
+                                            min="{{ question.min }}" max="{{ question.max }}" 
+                                            placeholder="Ingresa un valor entre {{ question.min }} y {{ question.max }}">
+                                    </div>
+                                    {% elif question.type == 'choice' %}
+                                    <div class="mb-3">
+                                        {% for option in question.options %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="{{ question.id }}" 
+                                                id="{{ question.id }}_{{ option.value }}" value="{{ option.value }}">
+                                            <label class="form-check-label" for="{{ question.id }}_{{ option.value }}">
+                                                {{ option.text }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                                
+                                <!-- BMI Helper (for convenience) -->
+                                {% if 'bmi' in categorized_questions['physical']['questions']|map(attribute='id')|list %}
+                                <div class="card bg-light mb-4">
+                                    <div class="card-body">
+                                        <h5>Calculadora de IMC</h5>
+                                        <p class="text-muted small">Herramienta opcional para ayudar a determinar tu rango de IMC</p>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="mb-3">
+                                                    <label for="height-input" class="form-label">Altura (cm)</label>
+                                                    <input type="number" class="form-control" id="height-input" placeholder="ej., 175">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="mb-3">
+                                                    <label for="weight-input" class="form-label">Peso (kg)</label>
+                                                    <input type="number" class="form-control" id="weight-input" placeholder="ej., 70">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Resultado IMC</label>
+                                                    <div class="form-control bg-white" id="bmi-result">-</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Nutrition Section -->
+                            <div class="questionnaire-section">
+                                <h3>
+                                    <i class="fas fa-apple-alt me-2"></i>
+                                    {{ categories['nutrition'] }}
+                                </h3>
+                                
+                                {% for question in categorized_questions['nutrition']['questions'] %}
+                                <div class="question-card" data-question-id="{{ question.id }}" data-input-type="{{ question.type }}">
+                                    <div class="question-text">{{ question.text }}</div>
+                                    
+                                    {% if question.type == 'number' %}
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" name="{{ question.id }}" 
+                                            min="{{ question.min }}" max="{{ question.max }}" 
+                                            placeholder="Ingresa un valor entre {{ question.min }} y {{ question.max }}">
+                                    </div>
+                                    {% elif question.type == 'choice' %}
+                                    <div class="mb-3">
+                                        {% for option in question.options %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="{{ question.id }}" 
+                                                id="{{ question.id }}_{{ option.value }}" value="{{ option.value }}">
+                                            <label class="form-check-label" for="{{ question.id }}_{{ option.value }}">
+                                                {{ option.text }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Medical Health Section -->
+                            <div class="questionnaire-section">
+                                <h3>
+                                    <i class="fas fa-heartbeat me-2"></i>
+                                    {{ categories['medical'] }}
+                                </h3>
+                                
+                                {% for question in categorized_questions['medical']['questions'] %}
+                                <div class="question-card" data-question-id="{{ question.id }}" data-input-type="{{ question.type }}">
+                                    <div class="question-text">{{ question.text }}</div>
+                                    
+                                    {% if question.type == 'number' %}
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" name="{{ question.id }}" 
+                                            min="{{ question.min }}" max="{{ question.max }}" 
+                                            placeholder="Ingresa un valor entre {{ question.min }} y {{ question.max }}">
+                                    </div>
+                                    {% elif question.type == 'choice' %}
+                                    <div class="mb-3">
+                                        {% for option in question.options %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="{{ question.id }}" 
+                                                id="{{ question.id }}_{{ option.value }}" value="{{ option.value }}">
+                                            <label class="form-check-label" for="{{ question.id }}_{{ option.value }}">
+                                                {{ option.text }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Lifestyle Section -->
+                            <div class="questionnaire-section">
+                                <h3>
+                                    <i class="fas fa-coffee me-2"></i>
+                                    {{ categories['lifestyle'] }}
+                                </h3>
+                                
+                                {% for question in categorized_questions['lifestyle']['questions'] %}
+                                <div class="question-card" data-question-id="{{ question.id }}" data-input-type="{{ question.type }}">
+                                    <div class="question-text">{{ question.text }}</div>
+                                    
+                                    {% if question.type == 'number' %}
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" name="{{ question.id }}" 
+                                            min="{{ question.min }}" max="{{ question.max }}" 
+                                            placeholder="Ingresa un valor entre {{ question.min }} y {{ question.max }}">
+                                    </div>
+                                    {% elif question.type == 'choice' %}
+                                    <div class="mb-3">
+                                        {% for option in question.options %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="{{ question.id }}" 
+                                                id="{{ question.id }}_{{ option.value }}" value="{{ option.value }}">
+                                            <label class="form-check-label" for="{{ question.id }}_{{ option.value }}">
+                                                {{ option.text }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Psychology Section -->
+                            <div class="questionnaire-section">
+                                <h3>
+                                    <i class="fas fa-brain me-2"></i>
+                                    {{ categories['psychology'] }}
+                                </h3>
+                                
+                                {% for question in categorized_questions['psychology']['questions'] %}
+                                <div class="question-card" data-question-id="{{ question.id }}" data-input-type="{{ question.type }}">
+                                    <div class="question-text">{{ question.text }}</div>
+                                    
+                                    {% if question.type == 'number' %}
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" name="{{ question.id }}" 
+                                            min="{{ question.min }}" max="{{ question.max }}" 
+                                            placeholder="Ingresa un valor entre {{ question.min }} y {{ question.max }}">
+                                    </div>
+                                    {% elif question.type == 'choice' %}
+                                    <div class="mb-3">
+                                        {% for option in question.options %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="{{ question.id }}" 
+                                                id="{{ question.id }}_{{ option.value }}" value="{{ option.value }}">
+                                            <label class="form-check-label" for="{{ question.id }}_{{ option.value }}">
+                                                {{ option.text }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Social Connections Section -->
+                            <div class="questionnaire-section">
+                                <h3>
+                                    <i class="fas fa-users me-2"></i>
+                                    {{ categories['social'] }}
+                                </h3>
+                                
+                                {% for question in categorized_questions['social']['questions'] %}
+                                <div class="question-card" data-question-id="{{ question.id }}" data-input-type="{{ question.type }}">
+                                    <div class="question-text">{{ question.text }}</div>
+                                    
+                                    {% if question.type == 'number' %}
+                                    <div class="mb-3">
+                                        <input type="number" class="form-control" name="{{ question.id }}" 
+                                            min="{{ question.min }}" max="{{ question.max }}" 
+                                            placeholder="Ingresa un valor entre {{ question.min }} y {{ question.max }}">
+                                    </div>
+                                    {% elif question.type == 'choice' %}
+                                    <div class="mb-3">
+                                        {% for option in question.options %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="{{ question.id }}" 
+                                                id="{{ question.id }}_{{ option.value }}" value="{{ option.value }}">
+                                            <label class="form-check-label" for="{{ question.id }}_{{ option.value }}">
+                                                {{ option.text }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div class="text-center">
+                                <button type="submit" id="submit-questionnaire" class="btn btn-secondary btn-lg" disabled>
+                                    <i class="fas fa-calculator me-2"></i>Calcular Mi Edad Biológica
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Disclaimer -->
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h5><i class="fas fa-info-circle me-2"></i>Aviso de Privacidad</h5>
+                        <p class="mb-0 small">Esta calculadora es solo para fines informativos. Tus respuestas se procesan localmente y no se almacenan permanentemente. No recopilamos información personal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Loading Overlay -->
+<div id="loading-overlay" class="d-none" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.7); z-index: 9999; display: flex; justify-content: center; align-items: center;">
+    <div class="text-center text-white">
+        <div class="spinner-border text-light mb-3" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <h4>Calculando tu edad biológica...</h4>
+        <p>Esto solo tomará un momento.</p>
+    </div>
+</div>
+{% endblock %} 

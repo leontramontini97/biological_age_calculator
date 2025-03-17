@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}Acerca de la Calculadora de Edad Biológica{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <h1 class="mb-0">Acerca de la Calculadora de Edad Biológica</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Acerca de</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- About Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Introduction -->
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">¿Qué es la Edad Biológica?</h2>
+                        <p>
+                            Mientras que la edad cronológica simplemente mide el tiempo que ha pasado desde tu nacimiento, la <strong>edad biológica</strong> intenta capturar cómo está envejeciendo realmente tu cuerpo.
+                        </p>
+                        <p>
+                            Las personas con la misma edad cronológica pueden tener edades biológicas muy diferentes debido a factores como la genética, el estilo de vida, el entorno y la presencia de enfermedades. La edad biológica es una evaluación de cuánto ha "envejecido" tu cuerpo en comparación con lo que se esperaría para tu edad cronológica.
+                        </p>
+                        <p>
+                            Una edad biológica más baja que tu edad cronológica sugiere que estás envejeciendo más lentamente y potencialmente podrías vivir más tiempo con mejor salud. Por el contrario, una edad biológica más alta puede indicar un riesgo mayor de desarrollar enfermedades relacionadas con la edad.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Measurement Approaches -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h3 class="m-0 font-weight-bold">Enfoques para Medir la Edad Biológica</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-4">Existen varios métodos para medir o estimar la edad biológica, cada uno con diferentes niveles de precisión y accesibilidad:</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="bg-primary text-white">
+                                    <tr>
+                                        <th>Enfoque</th>
+                                        <th>Descripción</th>
+                                        <th>Precisión</th>
+                                        <th>Accesibilidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Basado en Biomarcadores</strong></td>
+                                        <td>Usa pruebas de sangre y medidas fisiológicas para calcular la edad biológica (ej., Método de Klemera-Doubal)</td>
+                                        <td>Alta</td>
+                                        <td>Baja (requiere pruebas de laboratorio)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Basado en Cuestionarios</strong></td>
+                                        <td>Utiliza respuestas a preguntas sobre estilo de vida y hábitos de salud para estimar la edad biológica</td>
+                                        <td>Moderada</td>
+                                        <td>Alta (no requiere pruebas)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Relojes Epigenéticos</strong></td>
+                                        <td>Mide cambios en la metilación del ADN (ej., Reloj de Horvath)</td>
+                                        <td>Muy Alta</td>
+                                        <td>Muy Baja (requiere secuenciación de ADN)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Medidas Fisiológicas</strong></td>
+                                        <td>Utiliza datos como la fuerza de agarre, función pulmonar, o recuperación cardíaca</td>
+                                        <td>Moderada-Alta</td>
+                                        <td>Media (requiere equipo especializado)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Our Approach -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h3 class="m-0 font-weight-bold">Nuestro Enfoque Basado en Cuestionarios</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="mb-3">Ventajas del Enfoque Basado en Cuestionarios</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 bg-light">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-check-circle text-success me-2"></i>Accesibilidad</h5>
+                                        <p class="mb-0">No requiere análisis de sangre, visitas médicas o equipo especializado, lo que lo hace disponible para cualquier persona con acceso a internet.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 bg-light">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-check-circle text-success me-2"></i>Exhaustividad</h5>
+                                        <p class="mb-0">Evalúa una amplia gama de factores que influyen en el envejecimiento, incluidos aspectos sociales y psicológicos que a menudo se pasan por alto en enfoques basados en biomarcadores.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 bg-light">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-check-circle text-success me-2"></i>Aplicabilidad</h5>
+                                        <p class="mb-0">Proporciona recomendaciones directamente aplicables basadas en los factores de estilo de vida que puedes cambiar, enfocándose en intervenciones prácticas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 bg-light">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-check-circle text-success me-2"></i>Basado en Evidencia</h5>
+                                        <p class="mb-0">Aunque no es tan preciso como los métodos basados en biomarcadores, se basa en asociaciones bien establecidas entre factores de estilo de vida y envejecimiento saludable.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mb-3">Cómo Funciona Nuestra Calculadora</h4>
+                        <ol>
+                            <li><strong>Respondes preguntas</strong> sobre aspectos clave de tu salud, estilo de vida y características personales.</li>
+                            <li><strong>Cada respuesta tiene un impacto</strong> basado en la literatura científica sobre cómo esos factores se relacionan con el envejecimiento acelerado o desacelerado.</li>
+                            <li><strong>Nuestra calculadora determina tu edad biológica</strong> ajustando tu edad cronológica según tus respuestas.</li>
+                            <li><strong>Analizamos las diferentes categorías</strong> para identificar dónde tienes fortalezas y áreas de mejora.</li>
+                            <li><strong>Generamos recomendaciones personalizadas</strong> para ayudarte a mejorar tu edad biológica.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Scientific Background -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 bg-info text-white">
+                        <h3 class="m-0 font-weight-bold">Fundamento Científico</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Esta calculadora se basa en investigaciones científicas en múltiples áreas clave que afectan el envejecimiento:</p>
+                        
+                        <div class="d-flex mb-3">
+                            <div class="me-3">
+                                <i class="fas fa-running fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5>Actividad Física</h5>
+                                <p>Estudios a gran escala, incluyendo el estudio de cohorte de Cooper, han encontrado consistentemente que los niveles más altos de actividad física se correlacionan con un menor riesgo de mortalidad. El entrenamiento de fuerza se ha asociado específicamente con una mejor función metabólica en la edad avanzada.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-3">
+                            <div class="me-3">
+                                <i class="fas fa-bed fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5>Patrones de Sueño</h5>
+                                <p>La investigación del Estudio del Sueño del Corazón y otros ha demostrado que 7-8 horas de sueño de calidad se asocia con una mejor salud y longevidad. La privación crónica de sueño aumenta los marcadores de inflamación y acelera el envejecimiento celular.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-3">
+                            <div class="me-3">
+                                <i class="fas fa-apple-alt fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5>Nutrición</h5>
+                                <p>Los patrones dietéticos como la dieta mediterránea se han asociado con un menor riesgo de enfermedades crónicas y mayor longevidad en numerosos estudios, incluido el Estudio PREDIMED.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-3">
+                            <div class="me-3">
+                                <i class="fas fa-users fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5>Conexiones Sociales</h5>
+                                <p>El Estudio de Desarrollo Adulto de Harvard, en curso desde más de 80 años, ha identificado las relaciones sociales fuertes como uno de los predictores más fuertes de la longevidad y el bienestar a lo largo de la vida.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-3">
+                            <div class="me-3">
+                                <i class="fas fa-heart fa-2x text-primary"></i>
+                            </div>
+                            <div>
+                                <h5>Factores de Estilo de Vida Saludable</h5>
+                                <p>Un análisis de 2018 en la revista Circulation encontró que la adherencia a cinco factores de estilo de vida saludable (nunca fumar, IMC saludable, actividad física regular, dieta saludable y consumo moderado de alcohol) se asoció con una expectativa de vida 14 años mayor para las mujeres y 12 años mayor para los hombres.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Limitations -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 bg-warning">
+                        <h3 class="m-0 font-weight-bold">Limitaciones</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Es importante entender las limitaciones de este enfoque basado en cuestionarios:</p>
+                        
+                        <ul>
+                            <li><strong>Basado en datos autoinformados:</strong> Dependemos de tus respuestas, que pueden no ser completamente precisas o pueden estar sujetas a sesgos de recuerdo.</li>
+                            <li><strong>No mide biomarcadores directos:</strong> No captura datos fisiológicos directos como niveles de glucosa, marcadores inflamatorios o perfiles de lípidos.</li>
+                            <li><strong>Precisión moderada:</strong> No es tan preciso como los métodos basados en biomarcadores o los relojes epigenéticos.</li>
+                            <li><strong>No puede detectar condiciones subclínicas:</strong> No puede identificar problemas de salud que aún no muestran síntomas o no son evidentes para ti.</li>
+                            <li><strong>Generaliza a través de poblaciones:</strong> Los pesos aplicados a diferentes factores se basan en promedios poblacionales y pueden no ser perfectamente aplicables a cada individuo.</li>
+                        </ul>
+                        
+                        <div class="alert alert-danger mt-3">
+                            <strong>Nota importante:</strong> Esta calculadora es sólo para fines informativos y educativos. No pretende diagnosticar ninguna condición médica ni sustituir el consejo médico profesional. Consulta siempre con profesionales de la salud para obtener orientación personalizada.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- References -->
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <h3 class="m-0 font-weight-bold">Referencias</h3>
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>Li, Y., et al. (2018). <em>Impact of Healthy Lifestyle Factors on Life Expectancies in the US Population.</em> Circulation, 138(4), 345-355.</li>
+                            <li>Klemera, P., & Doubal, S. (2006). <em>A new approach to the concept and computation of biological age.</em> Mechanisms of Ageing and Development, 127(3), 240-248.</li>
+                            <li>Horvath, S. (2013). <em>DNA methylation age of human tissues and cell types.</em> Genome Biology, 14(10), R115.</li>
+                            <li>Waldinger, R. J., & Schulz, M. S. (2010). <em>What's love got to do with it? Social functioning, perceived health, and daily happiness in married octogenarians.</em> Psychology and Aging, 25(2), 422-431.</li>
+                            <li>Estruch, R., et al. (2018). <em>Primary Prevention of Cardiovascular Disease with a Mediterranean Diet Supplemented with Extra-Virgin Olive Oil or Nuts.</em> New England Journal of Medicine, 378(25), e34.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

@@ -1,0 +1,387 @@
+/* 
+ * Biological Age Calculator Stylesheet
+ * Modern, clean design with a focus on readability and usability
+ */
+
+:root {
+    /* Color Palette */
+    --primary: #4e73df;
+    --primary-dark: #2e59d9;
+    --secondary: #36b9cc;
+    --success: #1cc88a;
+    --warning: #f6c23e;
+    --danger: #e74a3b;
+    --light: #f8f9fc;
+    --dark: #5a5c69;
+    --text: #444444;
+    --card-bg: #ffffff;
+    --gradient-start: #4e73df;
+    --gradient-end: #224abe;
+    --form-bg: #f8f9fc;
+    --form-border: #e3e6f0;
+    
+    /* Typography */
+    --font-primary: 'Montserrat', sans-serif;
+    --font-secondary: 'Poppins', sans-serif;
+}
+
+/* General Styles */
+body {
+    font-family: var(--font-primary);
+    color: var(--text);
+    line-height: 1.6;
+    background-color: #f5f7fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    color: var(--dark);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* Navbar Styles */
+.navbar {
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: white;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 4px;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    color: white;
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.hero h1 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+    background-color: var(--card-bg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: rgba(78, 115, 223, 0.08);
+    border-bottom: 1px solid rgba(78, 115, 223, 0.125);
+    padding: 1rem 1.5rem;
+    font-family: var(--font-secondary);
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Questionnaire Styles */
+.questionnaire-section {
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.questionnaire-section h3 {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--primary);
+    color: var(--primary-dark);
+}
+
+.question-card {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: var(--form-bg);
+    border: 1px solid var(--form-border);
+}
+
+.question-text {
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.form-check {
+    margin-bottom: 0.5rem;
+}
+
+/* Progress Indicator */
+.progress-container {
+    margin: 2rem 0;
+}
+
+.progress {
+    height: 0.8rem;
+    background-color: #e9ecef;
+    border-radius: 1rem;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    border-radius: 1rem;
+}
+
+/* Results Page */
+.results-highlight {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.aging-pace-positive {
+    color: var(--danger);
+}
+
+.aging-pace-negative {
+    color: var(--success);
+}
+
+.aging-pace-neutral {
+    color: var(--dark);
+}
+
+.category-indicator {
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    margin-top: 8px;
+}
+
+.indicator-excellent {
+    background-color: var(--success);
+}
+
+.indicator-adequate {
+    background-color: #a3e635;
+}
+
+.indicator-concern {
+    background-color: var(--warning);
+}
+
+.indicator-improve {
+    background-color: var(--danger);
+}
+
+.recommendations-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.recommendations-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.recommendations-list li:last-child {
+    border-bottom: none;
+}
+
+.recommendations-list i {
+    color: var(--primary);
+    margin-right: 10px;
+}
+
+/* About Page */
+.about-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.method-explanation {
+    background-color: rgba(78, 115, 223, 0.08);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+/* Comparison Page */
+.scenario-card {
+    height: 100%;
+}
+
+.scenario-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.scenario-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.comparison-chart {
+    max-width: 100%;
+    margin: 2rem auto;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--dark);
+    color: #d1d3e2;
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .hero {
+        padding: 3rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .results-highlight {
+        font-size: 2rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Form Elements */
+.form-control, .form-select {
+    background-color: var(--form-bg);
+    border: 1px solid var(--form-border);
+    border-radius: 4px;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Navigation tabs */
+.nav-tabs .nav-link {
+    color: var(--dark);
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-bottom: 3px solid transparent;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary);
+    background-color: transparent;
+    border-bottom: 3px solid var(--primary);
+}
+
+/* Custom Checkboxes and Radio Buttons */
+.custom-control {
+    padding-left: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.custom-control-label {
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+/* Assessment box */
+.assessment-box {
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.assessment-younger {
+    background-color: rgba(28, 200, 138, 0.15);
+    color: #169b6b;
+}
+
+.assessment-older {
+    background-color: rgba(231, 74, 59, 0.15);
+    color: #be3024;
+}
+
+.assessment-equal {
+    background-color: rgba(90, 92, 105, 0.15);
+    color: #3a3b45;
+} 

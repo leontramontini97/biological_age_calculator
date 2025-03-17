@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Calculadora de Edad Biológica - Evalúa Tu Salud{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Descubre Tu Edad Biológica</h1>
+        <p>Averigua si tu cuerpo está envejeciendo más rápido o más lento que tu edad cronológica basado en tu estilo de vida y factores de salud.</p>
+        <a href="{{ url_for('questionnaire') }}" class="btn btn-light btn-lg">
+            <i class="fas fa-clipboard-list me-2"></i>Realizar el Cuestionario
+        </a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2>¿Cómo funciona?</h2>
+                <p class="lead">Nuestro enfoque basado en cuestionarios utiliza factores de estilo de vida y salud científicamente validados para estimar tu edad biológica sin requerir pruebas de laboratorio.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-clipboard-list fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="card-title">Responde Preguntas</h4>
+                        <p class="card-text">Responde a preguntas sobre tu estilo de vida, salud y factores personales. No se requieren análisis de sangre ni medidas médicas.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-calculator fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="card-title">Obtén Tus Resultados</h4>
+                        <p class="card-text">Nuestro algoritmo calcula tu edad biológica basándose en factores científicamente establecidos asociados con el envejecimiento y la longevidad.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-chart-line fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="card-title">Mejora Tu Salud</h4>
+                        <p class="card-text">Recibe recomendaciones personalizadas para mejorar tu edad biológica y potencialmente extender tu esperanza de vida saludable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call-to-Action Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h2>¿Listo para descubrir tu edad biológica?</h2>
+                <p class="lead">Solo toma 5 minutos completar el cuestionario y obtener tus resultados.</p>
+                <a href="{{ url_for('questionnaire') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-arrow-right me-2"></i>Comenzar Ahora
+                </a>
+            </div>
+            <div class="col-md-5 text-center">
+                <img src="{{ url_for('static', filename='img/bioage-illustration.svg') }}" alt="Ilustración de Edad Biológica" class="img-fluid" 
+                     onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Edad+Biológica'; this.classList.add('rounded');">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Compare Methods Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2>Compara Diferentes Enfoques</h2>
+                <p class="lead">Observa cómo las elecciones de estilo de vida afectan la edad biológica en diferentes escenarios.</p>
+                <a href="{{ url_for('comparison') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-chart-bar me-2"></i>Ver Comparaciones de Estilos de Vida
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Method Comparison Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Cuestionario vs. Enfoque de Biomarcadores</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Característica</th>
+                        <th>Basado en Cuestionario</th>
+                        <th>Basado en Biomarcadores (ej. Klemera-Doubal)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Precisión</strong></td>
+                        <td>Moderada</td>
+                        <td>Alta</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accesibilidad</strong></td>
+                        <td>Alta (no requiere pruebas de laboratorio)</td>
+                        <td>Menor (requiere pruebas específicas de biomarcadores)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Costo</strong></td>
+                        <td>Gratis</td>
+                        <td>Potencialmente costoso</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Validación científica</strong></td>
+                        <td>Moderada</td>
+                        <td>Alta</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Personalización</strong></td>
+                        <td>Basada en factores de estilo de vida</td>
+                        <td>Basada en medidas fisiológicas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Recomendaciones</strong></td>
+                        <td>Directamente aplicables</td>
+                        <td>Pueden requerir interpretación médica</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="py-3">
+    <div class="container">
+        <div class="alert alert-info">
+            <strong>Aviso:</strong> Esta calculadora de edad biológica es solo para fines informativos y no sustituye el consejo médico profesional. Los resultados no deben utilizarse para tomar decisiones médicas. Consulta con profesionales de la salud para recomendaciones personalizadas.
+        </div>
+    </div>
+</section>
+{% endblock %} 

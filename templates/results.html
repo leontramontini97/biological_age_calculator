@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}Resultados de Tu Edad Biológica{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Print styles */
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+        .print-full-width {
+            width: 100% !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-4 bg-light no-print">
+    <div class="container">
+        <h1 class="mb-0">Resultados de Tu Edad Biológica</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('questionnaire') }}">Cuestionario</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Resultados</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="py-5">
+    <div class="container" id="results-container">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Primary Results Card -->
+                <div class="card shadow mb-4 animate-on-load">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h3 class="m-0 font-weight-bold">Evaluación de Edad Biológica</h3>
+                        <button id="print-results" class="btn btn-sm btn-outline-primary no-print">
+                            <i class="fas fa-print me-1"></i> Imprimir Resultados
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6 text-center border-end">
+                                <p class="text-muted mb-1">Edad Cronológica</p>
+                                <div class="results-highlight">{{ results.chronological_age }}</div>
+                                <p>años</p>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <p class="text-muted mb-1">Edad Biológica</p>
+                                <div class="results-highlight">{{ results.biological_age }}</div>
+                                <p>años</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-4">
+                            <p class="text-muted mb-1">Ritmo de Envejecimiento</p>
+                            <div class="h3 
+                                {% if results.aging_pace > 0 %}aging-pace-positive
+                                {% elif results.aging_pace < 0 %}aging-pace-negative
+                                {% else %}aging-pace-neutral{% endif %}">
+                                {{ "%+.1f"|format(results.aging_pace) }} años
+                            </div>
+                            
+                            <!-- Assessment Box -->
+                            <div class="assessment-box 
+                                {% if results.aging_pace > 0 %}assessment-older
+                                {% elif results.aging_pace < 0 %}assessment-younger
+                                {% else %}assessment-equal{% endif %}">
+                                {{ results.qualitative_rating }}
+                            </div>
+                        </div>
+                        
+                        <!-- Visualization -->
+                        <div class="text-center mb-4">
+                            <img src="data:image/png;base64,{{ plot_base64 }}" class="img-fluid" alt="Visualización de Edad Biológica">
+                        </div>
+                        
+                        <p class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Tu edad biológica es una medida de qué tan rápido o lento está envejeciendo tu cuerpo en comparación con tu edad cronológica. 
+                            Una edad biológica más baja indica que tu cuerpo está envejeciendo más lentamente que el promedio, lo que puede estar asociado con un menor riesgo de enfermedades y una mayor longevidad.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Category Breakdown -->
+                <div class="card shadow mb-4 animate-on-load" style="animation-delay: 0.2s;">
+                    <div class="card-header py-3">
+                        <h4 class="m-0 font-weight-bold">Desglose por Categorías</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-4">El impacto de diferentes factores de estilo de vida y salud en tu edad biológica:</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Categoría</th>
+                                        <th>Impacto</th>
+                                        <th>Calificación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for category_id, impact in results.category_scores|dictsort(by='value', reverse=true) %}
+                                    <tr>
+                                        <td>{{ categories[category_id] }}</td>
+                                        <td>{{ "%+.2f"|format(impact) }}</td>
+                                        <td>
+                                            {% if impact > 1 %}
+                                            <div class="d-flex align-items-center">
+                                                <span class="text-danger me-2">Necesita mejorar</span>
+                                                <div class="category-indicator indicator-improve"></div>
+                                            </div>
+                                            {% elif impact > 0 %}
+                                            <div class="d-flex align-items-center">
+                                                <span class="text-warning me-2">Leve preocupación</span>
+                                                <div class="category-indicator indicator-concern"></div>
+                                            </div>
+                                            {% elif impact > -1 %}
+                                            <div class="d-flex align-items-center">
+                                                <span class="text-info me-2">Adecuado</span>
+                                                <div class="category-indicator indicator-adequate"></div>
+                                            </div>
+                                            {% else %}
+                                            <div class="d-flex align-items-center">
+                                                <span class="text-success me-2">Excelente</span>
+                                                <div class="category-indicator indicator-excellent"></div>
+                                            </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="alert alert-secondary mt-3">
+                            <strong>Cómo interpretar:</strong> 
+                            Los valores negativos (verde) indican factores que están ayudando a mantener tu edad biológica más baja.
+                            Los valores positivos (amarillo/rojo) indican factores que pueden estar acelerando tu proceso de envejecimiento.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <!-- Recommendations Card -->
+                <div class="card shadow mb-4 animate-on-load" style="animation-delay: 0.4s;">
+                    <div class="card-header py-3 bg-primary text-white">
+                        <h4 class="m-0 font-weight-bold">Tus Recomendaciones</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-4">Basado en tus resultados, aquí hay algunas recomendaciones personalizadas que pueden ayudar a mejorar tu edad biológica:</p>
+                        
+                        {% for rec in recommendations.recommendations %}
+                        <div class="mb-4">
+                            <h5>{{ rec.category }}</h5>
+                            <ul class="recommendations-list">
+                                {% for suggestion in rec.suggestions %}
+                                <li><i class="fas fa-check-circle"></i> {{ suggestion }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endfor %}
+                        
+                        <div class="alert alert-warning mt-3 small">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Estas recomendaciones son pautas generales basadas en tus respuestas al cuestionario. Para consejos médicos personalizados, consulta con profesionales de la salud.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- What's Next Card -->
+                <div class="card shadow mb-4 animate-on-load no-print" style="animation-delay: 0.6s;">
+                    <div class="card-header py-3">
+                        <h4 class="m-0 font-weight-bold">¿Qué Sigue?</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-3">
+                            <a href="{{ url_for('questionnaire') }}" class="btn btn-outline-primary">
+                                <i class="fas fa-redo me-2"></i> Volver a Realizar el Cuestionario
+                            </a>
+                            <a href="{{ url_for('comparison') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-chart-bar me-2"></i> Comparar Escenarios de Estilo de Vida
+                            </a>
+                            <a href="{{ url_for('about') }}" class="btn btn-outline-info">
+                                <i class="fas fa-info-circle me-2"></i> Conocer Más Sobre el Método
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="py-3 no-print">
+    <div class="container">
+        <div class="alert alert-info">
+            <strong>Aviso:</strong> Este cálculo de edad biológica es solo para fines informativos y no sustituye el consejo médico profesional, diagnóstico o tratamiento. Los resultados no deben utilizarse para tomar decisiones médicas.
+        </div>
+    </div>
+</section>
+{% endblock %} 

@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}Comparación de Escenarios de Estilo de Vida{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <h1 class="mb-0">Comparación de Escenarios de Estilo de Vida</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Comparación de Estilos de Vida</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Comparison Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10 text-center">
+                <h2>Cómo los Estilos de Vida Afectan la Edad Biológica</h2>
+                <p class="lead">Observa cómo diferentes escenarios de estilo de vida pueden impactar tu edad biológica en comparación con tu edad cronológica.</p>
+            </div>
+        </div>
+        
+        <!-- Comparison Chart -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <img src="data:image/png;base64,{{ comparison_plot }}" class="img-fluid comparison-chart" alt="Gráfico de Comparación de Estilos de Vida">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scenario Comparison Table -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10">
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <h3 class="m-0 font-weight-bold">Detalles de Escenarios</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="bg-primary text-white">
+                                    <tr>
+                                        <th>Escenario</th>
+                                        <th>Edad Cronológica</th>
+                                        <th>Edad Biológica</th>
+                                        <th>Ritmo de Envejecimiento</th>
+                                        <th>Evaluación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for name, result in scenario_results.items() %}
+                                    <tr>
+                                        <td><strong>{{ name }}</strong></td>
+                                        <td>{{ result.chronological_age }} años</td>
+                                        <td>{{ result.biological_age }} años</td>
+                                        <td class="{% if result.aging_pace > 0 %}text-danger{% elif result.aging_pace < 0 %}text-success{% endif %}">
+                                            {{ "%+.1f"|format(result.aging_pace) }} años
+                                        </td>
+                                        <td>{{ result.qualitative_rating }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scenario Descriptions -->
+        <div class="row">
+            {% for name, scenario in scenarios.items() %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 scenario-card">
+                    <div class="card-header py-3 {% if name == 'Estilo de Vida Óptimo' %}bg-success text-white{% elif name == 'Hábitos de Salud Deficientes' %}bg-danger text-white{% elif name == 'Caso Base' %}bg-primary text-white{% endif %}">
+                        <h5 class="m-0 font-weight-bold">{{ name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <span class="text-muted">Edad Biológica:</span>
+                            <span class="scenario-value">{{ scenario_results[name].biological_age }} años</span>
+                        </div>
+                        
+                        <h6>Características Clave:</h6>
+                        <ul>
+                            {% if name == 'Caso Base' %}
+                            <li>Persona de 45 años con hábitos de vida promedio</li>
+                            <li>IMC normal, ejercicio moderado</li>
+                            <li>Niveles moderados de estrés</li>
+                            <li>Buenas conexiones sociales</li>
+                            <li>Nunca ha fumado, consumo moderado de alcohol</li>
+                            {% elif name == 'Sueño Deficiente' %}
+                            <li>Igual que el caso base pero con <strong>menos de 5 horas de sueño</strong></li>
+                            <li>La privación de sueño está asociada con un envejecimiento acelerado</li>
+                            <li>Afecta la regulación hormonal y la reparación celular</li>
+                            <li>Aumenta los marcadores de inflamación</li>
+                            <li>Puede contribuir a la disfunción metabólica</li>
+                            {% elif name == 'Estilo de Vida Activo' %}
+                            <li>Patrón de ejercicio muy activo (300+ min/semana)</li>
+                            <li>Entrenamiento de fuerza regular (4+ veces/semana)</li>
+                            <li>Menos tiempo sedentario (4-6 horas/día sentado)</li>
+                            <li>Por lo demás igual que el caso base</li>
+                            <li>La actividad física es uno de los factores anti-envejecimiento más fuertes</li>
+                            {% elif name == 'Hábitos de Salud Deficientes' %}
+                            <li>Fumador actual</li>
+                            <li>Consumo elevado de alcohol</li>
+                            <li>Dieta deficiente</li>
+                            <li>Estilo de vida sedentario (sin ejercicio)</li>
+                            <li>Estos factores aceleran significativamente el envejecimiento</li>
+                            {% elif name == 'Estilo de Vida Óptimo' %}
+                            <li>Patrón de ejercicio muy activo (300+ min/semana)</li>
+                            <li>Excelente dieta con 6+ porciones de frutas/verduras</li>
+                            <li>Niveles bajos de estrés</li>
+                            <li>Muy feliz con excelentes conexiones sociales</li>
+                            <li>Estimulación mental diaria</li>
+                            {% endif %}
+                        </ul>
+                        
+                        <div class="alert alert-{% if scenario_results[name].aging_pace > 0 %}danger{% elif scenario_results[name].aging_pace < 0 %}success{% else %}secondary{% endif %} mt-3">
+                            <strong>Ritmo de Envejecimiento:</strong> {{ "%+.1f"|format(scenario_results[name].aging_pace) }} años comparado con la edad cronológica
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 text-center">
+                <div class="card bg-light border-0">
+                    <div class="card-body">
+                        <h4>¿Listo para evaluar tu propia edad biológica?</h4>
+                        <p>Completa nuestro cuestionario para descubrir tu edad biológica personal basada en tus factores de estilo de vida y salud.</p>
+                        <a href="{{ url_for('questionnaire') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-clipboard-list me-2"></i>Realizar el Cuestionario
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Key Insights Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h3 class="text-center mb-4">Información Clave sobre Factores de Envejecimiento</h3>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">
+                                    <i class="fas fa-thumbs-up me-2"></i>Factores que Retrasan el Envejecimiento
+                                </h5>
+                                <ul>
+                                    <li><strong>Ejercicio regular</strong> - 150+ minutos por semana de actividad moderada</li>
+                                    <li><strong>Dieta saludable</strong> - Rica en frutas, verduras y alimentos integrales</li>
+                                    <li><strong>Sueño adecuado</strong> - 7-8 horas de sueño de calidad por noche</li>
+                                    <li><strong>Conexiones sociales fuertes</strong> - Relaciones significativas con otros</li>
+                                    <li><strong>Estimulación mental</strong> - Desafíos cognitivos regulares y aprendizaje</li>
+                                    <li><strong>Manejo del estrés</strong> - Estrategias efectivas para afrontar el estrés diario</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-danger">
+                                    <i class="fas fa-thumbs-down me-2"></i>Factores que Aceleran el Envejecimiento
+                                </h5>
+                                <ul>
+                                    <li><strong>Fumar</strong> - Uno de los aceleradores más fuertes del envejecimiento biológico</li>
+                                    <li><strong>Alcohol excesivo</strong> - Más de 1-2 bebidas por día</li>
+                                    <li><strong>Sueño insuficiente</strong> - Privación crónica de sueño</li>
+                                    <li><strong>Estilo de vida sedentario</strong> - Falta de actividad física regular</li>
+                                    <li><strong>Dieta deficiente</strong> - Alta en alimentos procesados, azúcar y grasas poco saludables</li>
+                                    <li><strong>Estrés crónico</strong> - Estrés alto persistente sin alivio</li>
+                                    <li><strong>Aislamiento social</strong> - Falta de conexiones sociales significativas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <strong>Ciencia detrás de las Comparaciones:</strong> Los escenarios mostrados aquí se basan en asociaciones estadísticas entre factores de estilo de vida y riesgo de mortalidad/morbilidad en grandes estudios poblacionales. Los resultados individuales pueden variar según la genética y otros factores personales.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 
