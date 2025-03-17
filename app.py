@@ -238,6 +238,10 @@ def comparison():
                           scenario_results=scenario_results,
                           comparison_plot=comparison_plot)
 
+# Modificación para Vercel - exportar la aplicación Flask
+app.debug = False
+
+# Solo iniciar el servidor si se ejecuta directamente (no en Vercel)
 if __name__ == '__main__':
     # Make sure templates and static folders exist
     os.makedirs('templates', exist_ok=True)
