@@ -8,4 +8,7 @@ wheel==0.41.3
 
 # Instalar numpy y matplotlib en versiones específicas y compatibles
 numpy==1.24.3
-matplotlib==3.7.2 
+matplotlib==3.7.2
+pandas==2.0.3
+scipy==1.10.1
+pillow==10.0.0 
