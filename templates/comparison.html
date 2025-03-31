@@ -6,13 +6,20 @@
 <!-- Page Header -->
 <section class="py-4 bg-light">
     <div class="container">
-        <h1 class="mb-0">Comparación de Escenarios de Estilo de Vida</h1>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Inicio</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Comparación de Estilos de Vida</li>
-            </ol>
-        </nav>
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <img src="{{ url_for('static', filename='img/logo_lucy_hd.jpeg') }}" alt="Lucy Logo" class="img-fluid" style="max-height: 80px;">
+            </div>
+            <div class="col">
+                <h1 class="mb-0">Comparación de Escenarios de Estilo de Vida</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Inicio</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Comparación de Estilos de Vida</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
     </div>
 </section>
 
