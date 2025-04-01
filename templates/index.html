@@ -3,16 +3,19 @@
 {% block title %}Calculadora de Edad Biológica - Evalúa Tu Salud{% endblock %}
 
 {% block content %}
-<!-- Welcome Banner -->
-<section class="py-4 bg-primary text-white">
+<!-- Welcome Banner with Background Image -->
+<section class="position-relative overflow-hidden" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ url_for('static', filename='img/happy_aging_1.jpeg') }}'); background-size: cover; background-position: center; padding: 80px 0;">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-md-2 text-center text-md-start mb-3 mb-md-0">
-                <img src="{{ url_for('static', filename='img/logo_lucy_hd.jpeg') }}" alt="Dra. Lucy Abdala" class="img-fluid rounded-circle border border-3 border-white" style="max-width: 120px;">
+            <div class="col-md-3 col-lg-2 text-center text-md-start mb-4 mb-md-0">
+                <img src="{{ url_for('static', filename='img/logo_lucy_hd.jpeg') }}" alt="Dra. Lucy Abdala" class="img-fluid rounded-circle border border-3 border-white shadow" style="max-width: 160px;">
             </div>
-            <div class="col-md-10">
-                <h2 class="mb-2">Bienvenido al portal de la Dra. Lucy Abdala</h2>
-                <p class="lead mb-0">La edad biológica es diferente a la edad cronológica. Mientras que la edad cronológica mide el tiempo transcurrido desde el nacimiento, la edad biológica refleja el verdadero estado de salud de tu cuerpo y puede verse afectada por tus hábitos y estilo de vida. Con esta herramienta, podrás descubrir tu verdadera edad biológica y recibir recomendaciones personalizadas.</p>
+            <div class="col-md-9 col-lg-10 text-white">
+                <h1 class="display-4 fw-bold mb-3">Bienvenido al portal de la Dra. Lucy Abdala</h1>
+                <p class="lead" style="font-size: 1.25rem; line-height: 1.6;">La edad biológica es diferente a la edad cronológica. Mientras que la edad cronológica mide el tiempo transcurrido desde el nacimiento, la edad biológica refleja el verdadero estado de salud de tu cuerpo y puede verse afectada por tus hábitos y estilo de vida.</p>
+                <a href="{{ url_for('questionnaire') }}" class="btn btn-light btn-lg mt-3 shadow-sm">
+                    <i class="fas fa-clipboard-list me-2"></i>Realizar el Cuestionario
+                </a>
             </div>
         </div>
     </div>
@@ -30,19 +33,19 @@
 </section>
 
 <!-- Features Section -->
-<section class="py-5">
+<section class="py-5 bg-light">
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-lg-8 text-center">
-                <h2>¿Cómo funciona?</h2>
+                <h2 class="display-5 fw-bold">¿Cómo funciona?</h2>
                 <p class="lead">Nuestro enfoque basado en cuestionarios utiliza factores de estilo de vida y salud científicamente validados para estimar tu edad biológica sin requerir pruebas de laboratorio.</p>
             </div>
         </div>
         
         <div class="row">
             <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
                         <div class="mb-3">
                             <i class="fas fa-clipboard-list fa-3x text-primary"></i>
                         </div>
@@ -52,8 +55,8 @@
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
                         <div class="mb-3">
                             <i class="fas fa-calculator fa-3x text-primary"></i>
                         </div>
@@ -63,8 +66,8 @@
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
                         <div class="mb-3">
                             <i class="fas fa-chart-line fa-3x text-primary"></i>
                         </div>
