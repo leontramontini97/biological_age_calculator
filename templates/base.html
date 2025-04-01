@@ -23,10 +23,13 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('index') }}">
-                <img src="{{ url_for('static', filename='img/logo_lucy_hd.jpeg') }}" alt="Lucy Logo" class="navbar-logo" style="max-height: 40px; margin-right: 10px;">
-                Calculadora de Edad Biológica
-            </a>
+            <a class="navbar-brand d-none d-md-block"></a> <!-- Spacer for centering -->
+            <div class="navbar-brand mx-auto text-center">
+                <div class="d-flex flex-column align-items-center">
+                    <img src="{{ url_for('static', filename='img/logo_lucy_hd.jpeg') }}" alt="Dra. Lucy Abdala" class="img-fluid border border-2 border-white shadow-sm mb-2" style="max-height: 70px; max-width: 170px;">
+                    <span class="fw-bold">Calculadora de Edad Biológica</span>
+                </div>
+            </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
