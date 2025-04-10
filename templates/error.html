@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Error {{ error_code }} - Calculadora de Edad Biológica{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <h1 class="display-1 text-primary mb-4">{{ error_code }}</h1>
+                    <h2 class="mb-4">{{ error_message }}</h2>
+                    <p class="lead mb-4">
+                        Lo sentimos, ha ocurrido un error. Por favor, intenta nuevamente o regresa a la página principal.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-home me-2"></i>Volver al Inicio
+                        </a>
+                        <a href="https://ginecologalucyabdala.com/" class="btn btn-outline-primary btn-lg" target="_blank">
+                            <i class="fas fa-external-link-alt me-2"></i>Sitio Principal
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

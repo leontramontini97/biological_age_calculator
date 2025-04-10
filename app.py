@@ -14,11 +14,44 @@ import os
 import json
 import io
 import base64
-from datetime import datetime
+import logging
+from datetime import datetime, timedelta
 from questionnaire_bioage import QuestionnaireAgeCalculator
+from functools import wraps
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('app.log'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'biological-age-calculator-secret-key'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'biological-age-calculator-secret-key')
+
+# Add security headers middleware
+@app.after_request
+def add_security_headers(response):
+    # Prevent clickjacking attacks
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    
+    # Prevent XSS attacks
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    
+    # Prevent MIME type sniffing
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    
+    # Basic Content Security Policy
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com;"
+    
+    # Referrer Policy
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    
+    return response
 
 # Initialize the calculator
 calculator = QuestionnaireAgeCalculator()
@@ -28,6 +61,50 @@ calculator = QuestionnaireAgeCalculator()
 def get_now(value, format_string='%Y'):
     """Get current date/time in specified format (default: year)"""
     return datetime.now().strftime(format_string)
+
+# Rate limiting configuration
+RATE_LIMIT = {
+    'requests': 10,  # Number of requests
+    'window': 60     # Time window in seconds
+}
+
+# Rate limiting decorator
+def rate_limit(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        # Get client IP
+        client_ip = request.remote_addr
+        
+        # Create rate limit key
+        rate_key = f"rate_limit:{client_ip}"
+        
+        # Get current timestamp
+        now = datetime.now()
+        
+        # Get existing requests
+        requests = getattr(app, '_rate_limit', {}).get(rate_key, [])
+        
+        # Remove old requests
+        requests = [req_time for req_time in requests 
+                   if now - req_time < timedelta(seconds=RATE_LIMIT['window'])]
+        
+        # Check if limit exceeded
+        if len(requests) >= RATE_LIMIT['requests']:
+            logger.warning(f"Rate limit exceeded for IP: {client_ip}")
+            return jsonify({
+                'error': 'Demasiadas solicitudes. Por favor, espera un momento antes de intentar nuevamente.'
+            }), 429
+        
+        # Add new request
+        requests.append(now)
+        
+        # Update rate limit data
+        if not hasattr(app, '_rate_limit'):
+            app._rate_limit = {}
+        app._rate_limit[rate_key] = requests
+        
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/')
 def index():
@@ -58,6 +135,7 @@ def questionnaire():
                           categories=categories)
 
 @app.route('/calculate', methods=['POST'])
+@rate_limit
 def calculate():
     """Process form submission and calculate biological age."""
     # Get all form data
@@ -252,3 +330,25 @@ if __name__ == '__main__':
     
     # Start the application
     app.run(debug=True, port=5000) 
+
+# Error handlers
+@app.errorhandler(404)
+def page_not_found(e):
+    logger.warning(f"404 error: {request.url}")
+    return render_template('error.html', 
+                         error_code=404,
+                         error_message="Página no encontrada"), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    logger.error(f"500 error: {str(e)}")
+    return render_template('error.html',
+                         error_code=500,
+                         error_message="Error interno del servidor"), 500
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logger.error(f"Unhandled exception: {str(e)}")
+    return render_template('error.html',
+                         error_code=500,
+                         error_message="Ha ocurrido un error inesperado"), 500 
