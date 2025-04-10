@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Política de Privacidad - Calculadora de Edad Biológica{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h1 class="mb-4">Política de Privacidad</h1>
+                    
+                    <h2 class="h4 mb-3">1. Información que Recopilamos</h2>
+                    <p>Esta calculadora de edad biológica recopila la siguiente información:</p>
+                    <ul>
+                        <li>Respuestas al cuestionario sobre estilo de vida y salud</li>
+                        <li>Edad cronológica</li>
+                        <li>No recopilamos información personal identificable como nombre, dirección, o información de contacto</li>
+                    </ul>
+
+                    <h2 class="h4 mb-3">2. Uso de la Información</h2>
+                    <p>La información recopilada se utiliza exclusivamente para:</p>
+                    <ul>
+                        <li>Calcular su edad biológica estimada</li>
+                        <li>Generar recomendaciones personalizadas</li>
+                        <li>Mejorar la precisión del algoritmo</li>
+                    </ul>
+
+                    <h2 class="h4 mb-3">3. Almacenamiento y Seguridad</h2>
+                    <p>Los datos se almacenan de forma segura y se implementan medidas de seguridad para proteger su información. Sin embargo, tenga en cuenta que:</p>
+                    <ul>
+                        <li>Los resultados se almacenan temporalmente en el servidor</li>
+                        <li>No se comparten datos con terceros</li>
+                        <li>No se utilizan cookies de seguimiento</li>
+                    </ul>
+
+                    <h2 class="h4 mb-3">4. Limitaciones y Descargo de Responsabilidad</h2>
+                    <p>Esta herramienta es solo para fines informativos y no debe utilizarse para:</p>
+                    <ul>
+                        <li>Tomar decisiones médicas</li>
+                        <li>Diagnosticar condiciones de salud</li>
+                        <li>Sustituir el consejo médico profesional</li>
+                    </ul>
+
+                    <h2 class="h4 mb-3">5. Sus Derechos</h2>
+                    <p>Como usuario, usted tiene derecho a:</p>
+                    <ul>
+                        <li>No proporcionar información si así lo desea</li>
+                        <li>Solicitar la eliminación de sus datos</li>
+                        <li>No aceptar los términos de uso</li>
+                    </ul>
+
+                    <div class="alert alert-info mt-4">
+                        <strong>Nota Importante:</strong> Esta herramienta no almacena información médica sensible y no está sujeta a regulaciones HIPAA. Sin embargo, nos tomamos muy en serio la privacidad de sus datos.
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Volver al Inicio
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

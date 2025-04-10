@@ -219,6 +219,16 @@ def about():
     """Render the about page with information on the method."""
     return render_template('about.html')
 
+@app.route('/privacy')
+def privacy():
+    """Render the privacy policy page."""
+    return render_template('privacy.html')
+
+@app.route('/terms')
+def terms():
+    """Render the terms of service page."""
+    return render_template('terms.html')
+
 @app.route('/comparison')
 def comparison():
     """Render the comparison page showing different lifestyle scenarios."""

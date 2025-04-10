@@ -317,10 +317,25 @@
                                 {% endfor %}
                             </div>
                             
+                            <!-- Consent Notice -->
+                            <div class="card bg-light mt-4 mb-4">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="consent-checkbox" required>
+                                        <label class="form-check-label" for="consent-checkbox">
+                                            Al enviar este cuestionario, acepto que he leído y estoy de acuerdo con la 
+                                            <a href="{{ url_for('privacy') }}" target="_blank">Política de Privacidad</a> y los 
+                                            <a href="{{ url_for('terms') }}" target="_blank">Términos de Uso</a>. 
+                                            Entiendo que esta herramienta es solo para fines informativos y no sustituye el consejo médico profesional.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <!-- Submit Button -->
-                            <div class="text-center">
-                                <button type="submit" id="submit-questionnaire" class="btn btn-secondary btn-lg" disabled>
-                                    <i class="fas fa-calculator me-2"></i>Calcular Mi Edad Biológica
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg" id="submit-button" disabled>
+                                    <i class="fas fa-calculator me-2"></i>Calcular Edad Biológica
                                 </button>
                             </div>
                         </form>
@@ -349,4 +364,14 @@
         <p>Esto solo tomará un momento.</p>
     </div>
 </div>
+
+{% block extra_js %}
+<script>
+    // Enable submit button only when consent is given
+    document.getElementById('consent-checkbox').addEventListener('change', function() {
+        document.getElementById('submit-button').disabled = !this.checked;
+    });
+</script>
+{% endblock %}
+
 {% endblock %} 

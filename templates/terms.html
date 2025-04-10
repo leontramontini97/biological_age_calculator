@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Términos de Uso - Calculadora de Edad Biológica{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h1 class="mb-4">Términos de Uso</h1>
+                    
+                    <h2 class="h4 mb-3">1. Aceptación de los Términos</h2>
+                    <p>Al utilizar esta calculadora de edad biológica, usted acepta estos términos de uso. Si no está de acuerdo, por favor no utilice la herramienta.</p>
+
+                    <h2 class="h4 mb-3">2. Propósito de la Herramienta</h2>
+                    <p>Esta calculadora es una herramienta informativa que:</p>
+                    <ul>
+                        <li>Proporciona estimaciones basadas en datos científicos</li>
+                        <li>Ofrece recomendaciones generales sobre estilo de vida</li>
+                        <li>No constituye asesoramiento médico profesional</li>
+                    </ul>
+
+                    <h2 class="h4 mb-3">3. Limitaciones</h2>
+                    <p>Esta herramienta tiene las siguientes limitaciones:</p>
+                    <ul>
+                        <li>Los resultados son estimaciones y no diagnósticos médicos</li>
+                        <li>No debe utilizarse para tomar decisiones médicas</li>
+                        <li>No sustituye la consulta con profesionales de la salud</li>
+                        <li>La precisión puede variar según los datos proporcionados</li>
+                    </ul>
+
+                    <h2 class="h4 mb-3">4. Responsabilidad del Usuario</h2>
+                    <p>Como usuario, usted acepta:</p>
+                    <ul>
+                        <li>Proporcionar información precisa y veraz</li>
+                        <li>No utilizar la herramienta con fines maliciosos</li>
+                        <li>Consultar con profesionales de la salud para decisiones médicas</li>
+                        <li>No compartir resultados como diagnóstico médico</li>
+                    </ul>
+
+                    <h2 class="h4 mb-3">5. Modificaciones</h2>
+                    <p>Nos reservamos el derecho de:</p>
+                    <ul>
+                        <li>Modificar estos términos en cualquier momento</li>
+                        <li>Actualizar o cambiar la herramienta</li>
+                        <li>Interrumpir el servicio si es necesario</li>
+                    </ul>
+
+                    <div class="alert alert-warning mt-4">
+                        <strong>Importante:</strong> Esta herramienta es proporcionada "tal cual" y no garantizamos su precisión o idoneidad para cualquier propósito específico.
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Volver al Inicio
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
