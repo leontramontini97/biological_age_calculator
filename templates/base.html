@@ -26,7 +26,9 @@
             <a class="navbar-brand d-none d-md-block"></a> <!-- Spacer for centering -->
             <div class="navbar-brand mx-auto text-center">
                 <div class="d-flex flex-column align-items-center">
-                    <img src="{{ url_for('static', filename='img/logo_lucy_hd.jpeg') }}" alt="Dra. Lucy Abdala" class="img-fluid border border-2 border-white shadow-sm mb-2" style="max-height: 70px; max-width: 170px;">
+                    <a href="https://ginecologalucyabdala.com/" target="_blank" class="text-decoration-none">
+                        <img src="{{ url_for('static', filename='img/logo_lucy_hd.jpeg') }}" alt="Dra. Lucy Abdala" class="img-fluid border border-2 border-white shadow-sm mb-2" style="max-height: 70px; max-width: 170px;">
+                    </a>
                     <span class="fw-bold">Calculadora de Edad Biológica</span>
                 </div>
             </div>
@@ -82,6 +84,12 @@
             <div class="mt-2">
                 <a href="{{ url_for('privacy') }}" class="text-muted me-3">Política de Privacidad</a>
                 <a href="{{ url_for('terms') }}" class="text-muted">Términos de Uso</a>
+            </div>
+            <div class="mt-3">
+                <small class="text-muted">
+                    Made with <i class="fas fa-heart"></i> by 
+                    <a href="https://www.dialogik.co/" target="_blank" class="text-muted">Dialogik</a>
+                </small>
             </div>
         </div>
     </footer>
