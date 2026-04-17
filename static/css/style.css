@@ -239,6 +239,26 @@ a:hover { color: var(--gold-light); text-decoration: underline; }
   border-color: var(--gold-light) !important;
 }
 
+/* ── Powered-by badge (navbar) ── */
+.dialogik-powered {
+  display: inline-block;
+  margin-top: 5px;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(196,151,58,0.65);
+  text-decoration: none !important;
+  transition: color 0.2s var(--ease);
+  white-space: nowrap;
+}
+
+.dialogik-powered:hover {
+  color: var(--gold-light) !important;
+  text-decoration: none !important;
+}
+
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    HERO (for .hero class usage)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
